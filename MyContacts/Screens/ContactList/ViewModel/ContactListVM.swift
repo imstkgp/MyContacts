@@ -6,11 +6,12 @@
 //  Copyright © 2019 Santosh Tewari. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ContactListDelegate {
     func refreshDetails()
 }
+
 final class ContactListVM {
     var contactDictionary = [String: [Contact]]()
     var contactSectionTitles = [String]()
@@ -57,5 +58,13 @@ final class ContactListVM {
         
         contactDictionary[Constant.otherContactKey] = otherContacts
         contactSectionTitles.append(Constant.otherContactKey)
+    }
+    
+    func openContactDetails(forIndexPath indexPath:IndexPath, fromController controller:UIViewController) {
+        let key = self.contactSectionTitles[indexPath.section]
+        if let contacts = self.contactDictionary[key] {
+            let contactDetailVC = NavigationCoordinator.createContactDetailsController(contacts[indexPath.row])
+            NavigationCoordinator.push(from: controller, to: contactDetailVC)
+        }
     }
 }

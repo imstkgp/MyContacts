@@ -12,7 +12,7 @@ class HomeContactCell: UITableViewCell {
 
     @IBOutlet weak var userImageView: AsyncImageView! {
         didSet {
-            self.userImageView.layer.cornerRadius = 25
+            self.userImageView.layer.cornerRadius = 20
         }
     }
     @IBOutlet weak var userName: UILabel!
