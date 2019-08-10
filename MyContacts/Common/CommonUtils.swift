@@ -22,4 +22,22 @@ final class CommonUtils {
         controller.navigationController?.navigationBar.tintColor = Constant.appGreenColor
         controller.navigationController?.view.backgroundColor = .white
     }
+    
+    class func showLoading(forController controller: UIViewController, message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.style = UIActivityIndicatorView.Style.gray
+        loadingIndicator.startAnimating();
+        
+        alert.view.addSubview(loadingIndicator)
+        controller.present(alert, animated: true, completion: nil)
+    }
+    
+    class func hideLoading(forController controller: UIViewController) {
+        DispatchQueue.main.async {
+            controller.dismiss(animated: false, completion: nil)
+        }
+    }
 }

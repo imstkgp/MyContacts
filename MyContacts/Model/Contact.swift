@@ -11,7 +11,7 @@ import Foundation
 struct Contact: Codable {
     let id: Int
     let firstName, lastName: String
-    let email, phoneNumber: String?
+    let email, phoneNumber, url: String?
     let profilePic: String
     let favorite: Bool
     let createdAt, updatedAt: String?
@@ -31,6 +31,7 @@ struct Contact: Codable {
         case firstName = "first_name"
         case lastName = "last_name"
         case email
+        case url
         case phoneNumber = "phone_number"
         case profilePic = "profile_pic"
         case favorite

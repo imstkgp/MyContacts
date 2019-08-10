@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ErrorView" customModule="MyContacts" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="error_page" translatesAutoresizingMaskIntoConstraints="NO" id="Ncf-N1-l4t">
+                    <rect key="frame" x="167" y="313" width="80" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Ncf-N1-l4t" secondAttribute="height" multiplier="1:1" id="aey-7h-GV3"/>
+                        <constraint firstAttribute="height" constant="80" id="p9C-ah-dt8"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oops. Something went worng. Plese try again in some time." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zlB-pE-Sk9">
+                    <rect key="frame" x="54" y="409" width="306.5" height="42.5"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAZ-q9-FSR">
+                    <rect key="frame" x="171" y="467.5" width="72" height="33"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="Try Again">
+                        <color key="titleColor" red="0.31372549020000001" green="0.89019607840000003" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="tryAgainTapped" destination="iN0-l3-epB" eventType="touchUpInside" id="qGg-Q5-zeF"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="zlB-pE-Sk9" secondAttribute="trailing" constant="40" id="2b1-3v-JMp"/>
+                <constraint firstItem="Ncf-N1-l4t" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" constant="-100" id="6pZ-Rr-0nR"/>
+                <constraint firstItem="zlB-pE-Sk9" firstAttribute="top" secondItem="Ncf-N1-l4t" secondAttribute="bottom" constant="16" id="9mC-Er-Z6z"/>
+                <constraint firstItem="zlB-pE-Sk9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="40" id="L3J-3P-aD7"/>
+                <constraint firstItem="ZAZ-q9-FSR" firstAttribute="centerX" secondItem="zlB-pE-Sk9" secondAttribute="centerX" id="SNm-7y-G89"/>
+                <constraint firstItem="ZAZ-q9-FSR" firstAttribute="top" secondItem="zlB-pE-Sk9" secondAttribute="bottom" constant="16" id="mhW-b7-BR6"/>
+                <constraint firstItem="zlB-pE-Sk9" firstAttribute="centerX" secondItem="Ncf-N1-l4t" secondAttribute="centerX" id="stT-Fu-b93"/>
+                <constraint firstItem="Ncf-N1-l4t" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="tOj-ak-Y7j"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="errorMessage" destination="zlB-pE-Sk9" id="2rB-yy-XLI"/>
+                <outlet property="tryAgainButton" destination="ZAZ-q9-FSR" id="ncs-Oh-HUS"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="error_page" width="150" height="150"/>
+    </resources>
+</document>

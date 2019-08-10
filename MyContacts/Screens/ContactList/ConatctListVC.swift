@@ -10,6 +10,13 @@ import UIKit
 
 class ConatctListVC: UITableViewController {
 
+    lazy var errorView:ErrorView = {
+        var errorView = ErrorView.instance(withMessage: Constant.Message.emptyContactList, showTryAgain: true)
+        errorView.delegate = self
+        errorView.frame = self.view.frame
+        return errorView;
+    }()
+    
     var viewModel: ContactListVM!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +32,21 @@ class ConatctListVC: UITableViewController {
     func setup() {
         viewModel = ContactListVM()
         viewModel.delegate = self
+        fetchContacts()
+    }
+    
+    @IBAction func addNewContact(_ sender: UIBarButtonItem) {
+        NavigationCoordinator.present(from: self, to: NavigationCoordinator.createEditContactController(nil))
+    }
+    
+    func fetchContacts() {
+        errorView.removeFromSuperview()
+        CommonUtils.showLoading(forController: self, message: "Fetching contacts...")
         viewModel.fetchContactList()
+    }
+    
+    func showErroView() {
+        self.view.addSubview(errorView)
     }
     // MARK: - Table view data source
 
@@ -62,6 +83,7 @@ class ConatctListVC: UITableViewController {
         return viewModel.contactSectionTitles
     }
     
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
         viewModel.openContactDetails(forIndexPath: indexPath, fromController: self)
@@ -69,10 +91,18 @@ class ConatctListVC: UITableViewController {
 }
 
 
-extension ConatctListVC: ContactListDelegate {
+extension ConatctListVC: ContactListDelegate, ErrorViewDelegate {
     func refreshDetails() {
+        CommonUtils.hideLoading(forController: self)
         DispatchQueue.main.async {
+            if self.viewModel.contactList?.isEmpty ?? true {
+                self.showErroView()
+            }
             self.tableView.reloadData()
         }
+    }
+    
+    func tryAgainTapped() {
+        fetchContacts()
     }
 }

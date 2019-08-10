@@ -28,7 +28,6 @@ final class ContactListVM {
             case .success(let contactList):
                 strongSelf.contactList = contactList
                 strongSelf.createContactDetails(contactList: contactList)
-                print(contactList)
                 break
             case .failure( _):
                 break

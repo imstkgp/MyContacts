@@ -12,12 +12,12 @@ final class NavigationCoordinator {
     private static let storyboard = UIStoryboard(name: "Main", bundle: nil)
     class func createContactDetailsController(_ contactDetail: Contact) -> ContactDetailVC {
         let controller = storyboard.instantiateViewController(withIdentifier: Constant.Controller.ContactDetailControllerID) as! ContactDetailVC
-        controller.contactDetail = contactDetail
+        controller.contact = contactDetail
         return controller
     }
     
-    class func createEditContactController(_ contactDetail: Contact) -> EditContactVC{
-        let controller = storyboard.instantiateViewController(withIdentifier: Constant.Controller.ContactEditControllerID) as! EditContactVC
+    class func createEditContactController(_ contactDetail: Contact?) -> AddOrEditContactVC{
+        let controller = storyboard.instantiateViewController(withIdentifier: Constant.Controller.ContactEditControllerID) as! AddOrEditContactVC
         controller.contactDetail = contactDetail
         return controller
     }
