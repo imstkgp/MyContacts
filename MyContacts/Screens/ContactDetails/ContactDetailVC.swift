@@ -33,9 +33,13 @@ class ContactDetailVC: UIViewController {
     
     var contact:Contact?
     var viewModel: ContactDetailVM!
+    var delegate: ContactUpdationProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel = ContactDetailVM()
+        viewModel.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,15 +50,13 @@ class ContactDetailVC: UIViewController {
     }
     
     func setup() {
-        viewModel = ContactDetailVM()
-        viewModel.delegate = self
         updateContactDetails(contact)
         fetchContactDetail()
     }
     
     func fetchContactDetail() {
-        if let contactURL = contact?.url {
-            viewModel.fetchContactDetails(forContactURL: contactURL)
+        if let contactId = contact?.id {
+            viewModel.fetchContactDetails(forId: contactId)
         }
     }
     
@@ -71,7 +73,10 @@ class ContactDetailVC: UIViewController {
     
     @objc func editTapped() {
         if let contactDetail = viewModel.contactDetail {
-            NavigationCoordinator.present(from: self, to: NavigationCoordinator.createEditContactController(contactDetail))
+            let controller = NavigationCoordinator.createEditContactController(contactDetail)
+            controller.delegate = self
+            controller.type = .edit
+            NavigationCoordinator.present(from: self, to: controller)
         }
     }
     
@@ -111,28 +116,33 @@ class ContactDetailVC: UIViewController {
         let message = self.favButton.isSelected ? Constant.Message.removeFavourite : Constant.Message.addFavourite
         let alert = UIAlertController.alert(with: "", message: message, cancelButtonTitle: "Not Now", defaultButtonTitle: "Ok", cancelButtonAction: nil) { (action) in
             self.favButton.isSelected = !self.favButton.isSelected
-            if let contactURL = self.contact?.url {
-                self.viewModel.updateFavorite(forContactURL: contactURL, isFavourite: self.favButton.isSelected)
-            }
+            self.viewModel.updateFavorite(isFavourite: self.favButton.isSelected)
         }
         self.present(alert, animated: true, completion: nil)
     }
 }
 
-extension ContactDetailVC: ContactDetailDelegate {
+extension ContactDetailVC: ContactDetailDelegate, ContactUpdationProtocol {
     func updateContactData() {
         DispatchQueue.main.async {
-            self.updateContactDetails(self.viewModel.contactDetail)
-            self.contactTableView.reloadData()
+            if let contactDetail = self.viewModel.contactDetail {
+                self.updateContactDetails(self.viewModel.contactDetail)
+                self.contactTableView.reloadData()
+                self.delegate?.onContactUpdatetionSucess(contact: contactDetail)
+            }
         }
     }
     
     func favoriteUpdateFailed() {
         DispatchQueue.main.async {
-            let alert = UIAlertController.alertWithMessage(message: "Failed to mark contact as favourite")
+            let alert = UIAlertController.alertWithMessage(message: "Failed to mark contact as favourite", action: nil)
             self.present(alert, animated: true, completion: nil)
             self.updateContactDetails(self.viewModel.contactDetail)
         }
+    }
+    
+    func onContactUpdatetionSucess(contact: Contact) {
+        self.viewModel.setupContactData(contact)
     }
 }
 

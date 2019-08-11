@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Contact: Codable {
+struct Contact: Codable, Comparable {
     let id: Int
     let firstName, lastName: String
     let email, phoneNumber, url: String?
@@ -37,5 +37,9 @@ struct Contact: Codable {
         case favorite
         case createdAt = "created_at"
         case updatedAt = "updated_at"
+    }
+    
+    static func < (lhs: Contact, rhs: Contact) -> Bool {
+        return lhs.firstName < rhs.firstName
     }
 }

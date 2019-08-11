@@ -23,9 +23,9 @@ class ContactDetailVM {
     
     var delegate: ContactDetailDelegate?
 
-    func fetchContactDetails(forContactURL contactURL:String?) {
-        if let url = contactURL {
-            APIManager.getContactDetail(contactUrl: url, complition: {[weak self] (result) in
+    func fetchContactDetails(forId contactId:Int?) {
+        if let contactId = contactId {
+            APIManager.getContactDetail(forId: contactId, complition: {[weak self] (result) in
                 guard let strongSelf = self else {
                     return
                 }
@@ -34,11 +34,11 @@ class ContactDetailVM {
         }
     }
     
-    func updateFavorite(forContactURL contactURL:String?, isFavourite: Bool) {
-        if let url = contactURL {
+    func updateFavorite(isFavourite: Bool) {
+        if let contactDetail = contactDetail {
             var parameters = [String: Any]()
             parameters["favorite"] = isFavourite
-            APIManager.updateContactDetail(contactUrl: url, parameters: parameters, complition: {[weak self] (result) in
+            APIManager.updateContactDetail(contactId: contactDetail.id, parameters: parameters, complition: {[weak self] (result) in
                 guard let strongSelf = self else {
                     return
                 }

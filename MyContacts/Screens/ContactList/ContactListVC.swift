@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConatctListVC: UITableViewController {
+class ContactListVC: UITableViewController {
 
     lazy var errorView:ErrorView = {
         var errorView = ErrorView.instance(withMessage: Constant.Message.emptyContactList, showTryAgain: true)
@@ -36,7 +36,7 @@ class ConatctListVC: UITableViewController {
     }
     
     @IBAction func addNewContact(_ sender: UIBarButtonItem) {
-        NavigationCoordinator.present(from: self, to: NavigationCoordinator.createEditContactController(nil))
+        self.viewModel.openAddContact(fromController: self)
     }
     
     func fetchContacts() {
@@ -91,7 +91,7 @@ class ConatctListVC: UITableViewController {
 }
 
 
-extension ConatctListVC: ContactListDelegate, ErrorViewDelegate {
+extension ContactListVC: ContactListDelegate, ErrorViewDelegate, ContactUpdationProtocol {
     func refreshDetails() {
         CommonUtils.hideLoading(forController: self)
         DispatchQueue.main.async {
@@ -102,7 +102,16 @@ extension ConatctListVC: ContactListDelegate, ErrorViewDelegate {
         }
     }
     
+    func refreshIndexSet(indexSet: IndexSet) {
+        self.tableView.beginUpdates()
+        self.tableView.reloadSections(indexSet, with: .none)
+        self.tableView.endUpdates()
+    }
     func tryAgainTapped() {
         fetchContacts()
+    }
+    
+    func onContactUpdatetionSucess(contact: Contact) {
+        self.viewModel.addOrUpdateContactDetail(contact: contact)
     }
 }

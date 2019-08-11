@@ -13,7 +13,7 @@
 		A1B3784022FC67FA00A4A8B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B3783E22FC67FA00A4A8B9 /* LaunchScreen.storyboard */; };
 		A1B3784B22FC67FA00A4A8B9 /* MyContactsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B3784A22FC67FA00A4A8B9 /* MyContactsTests.swift */; };
 		A1B3785622FC67FA00A4A8B9 /* MyContactsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B3785522FC67FA00A4A8B9 /* MyContactsUITests.swift */; };
-		A1B3786B22FC7CA900A4A8B9 /* ConatctListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B3786A22FC7CA900A4A8B9 /* ConatctListVC.swift */; };
+		A1B3786B22FC7CA900A4A8B9 /* ContactListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B3786A22FC7CA900A4A8B9 /* ContactListVC.swift */; };
 		A1B3787122FC82E000A4A8B9 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B3787022FC82E000A4A8B9 /* APIManager.swift */; };
 		A1B3787422FC838500A4A8B9 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B3787322FC838500A4A8B9 /* Contact.swift */; };
 		A1B3787622FC90A200A4A8B9 /* ContactListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B3787522FC90A200A4A8B9 /* ContactListVM.swift */; };
@@ -32,6 +32,7 @@
 		A1B378AA22FEAEEC00A4A8B9 /* UIAlertController+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B378A922FEAEEC00A4A8B9 /* UIAlertController+Helper.swift */; };
 		A1B378AE22FF49C400A4A8B9 /* AddOrEditContactVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B378AD22FF49C400A4A8B9 /* AddOrEditContactVM.swift */; };
 		A1B378B022FF4B5400A4A8B9 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B378AF22FF4B5400A4A8B9 /* Validator.swift */; };
+		A1B378B22300842F00A4A8B9 /* ContactUpdationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B378B12300842F00A4A8B9 /* ContactUpdationProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +65,7 @@
 		A1B3785122FC67FA00A4A8B9 /* MyContactsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyContactsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B3785522FC67FA00A4A8B9 /* MyContactsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyContactsUITests.swift; sourceTree = "<group>"; };
 		A1B3785722FC67FA00A4A8B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A1B3786A22FC7CA900A4A8B9 /* ConatctListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConatctListVC.swift; sourceTree = "<group>"; };
+		A1B3786A22FC7CA900A4A8B9 /* ContactListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListVC.swift; sourceTree = "<group>"; };
 		A1B3787022FC82E000A4A8B9 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		A1B3787322FC838500A4A8B9 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		A1B3787522FC90A200A4A8B9 /* ContactListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListVM.swift; sourceTree = "<group>"; };
@@ -83,6 +84,7 @@
 		A1B378A922FEAEEC00A4A8B9 /* UIAlertController+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Helper.swift"; sourceTree = "<group>"; };
 		A1B378AD22FF49C400A4A8B9 /* AddOrEditContactVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrEditContactVM.swift; sourceTree = "<group>"; };
 		A1B378AF22FF4B5400A4A8B9 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		A1B378B12300842F00A4A8B9 /* ContactUpdationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUpdationProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,7 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				A1B3787522FC90A200A4A8B9 /* ContactListVM.swift */,
-				A1B3786A22FC7CA900A4A8B9 /* ConatctListVC.swift */,
+				A1B3786A22FC7CA900A4A8B9 /* ContactListVC.swift */,
 				A1B3788E22FE0F2900A4A8B9 /* View */,
 			);
 			path = ContactList;
@@ -270,6 +272,7 @@
 				A1B3789822FE104400A4A8B9 /* NavigationCoordinator.swift */,
 				A1B3789A22FE152C00A4A8B9 /* CommonUtils.swift */,
 				A1B378AF22FF4B5400A4A8B9 /* Validator.swift */,
+				A1B378B12300842F00A4A8B9 /* ContactUpdationProtocol.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -417,11 +420,12 @@
 			files = (
 				A1B3789D22FE231F00A4A8B9 /* UIView+Helper.swift in Sources */,
 				A1B378AE22FF49C400A4A8B9 /* AddOrEditContactVM.swift in Sources */,
+				A1B378B22300842F00A4A8B9 /* ContactUpdationProtocol.swift in Sources */,
 				A1B3789B22FE152C00A4A8B9 /* CommonUtils.swift in Sources */,
 				A1B3787122FC82E000A4A8B9 /* APIManager.swift in Sources */,
 				A1B3789F22FE2DC100A4A8B9 /* ContactDetailVM.swift in Sources */,
 				A1B3787622FC90A200A4A8B9 /* ContactListVM.swift in Sources */,
-				A1B3786B22FC7CA900A4A8B9 /* ConatctListVC.swift in Sources */,
+				A1B3786B22FC7CA900A4A8B9 /* ContactListVC.swift in Sources */,
 				A1B3787C22FDD9D500A4A8B9 /* Constant.swift in Sources */,
 				A1B3787422FC838500A4A8B9 /* Contact.swift in Sources */,
 				A1B378A222FE9B0C00A4A8B9 /* ContactDetailCell.swift in Sources */,

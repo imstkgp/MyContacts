@@ -39,8 +39,9 @@ final class APIManager {
         task.resume()
     }
     
-    class func getContactDetail(contactUrl:String, complition: @escaping (Result<(Contact), Error>) -> Void) {
-        var request = URLRequest.init(url: URL.init(string: contactUrl)!)
+    class func getContactDetail(forId contactId:Int, complition: @escaping (Result<(Contact), Error>) -> Void) {
+        let url = "\(Constant.URL.contactDetailURL)/\(contactId).json"
+        var request = URLRequest.init(url: URL.init(string: url)!)
         request.httpMethod = HTTPMethod.get.rawValue
         
         let task = URLSession.shared.dataTask(with: request) { (result) in
@@ -63,14 +64,46 @@ final class APIManager {
         task.resume()
     }
     
-    class func updateContactDetail(contactUrl:String, parameters:[String: Any] ,complition: @escaping (Result<(Contact), Error>) -> Void) {
+    class func updateContactDetail(contactId:Int, parameters:[String: Any] ,complition: @escaping (Result<(Contact), Error>) -> Void) {
         var headers = [String:String] ()
         headers["content-type"] = "application/json"
     
+        let url = "\(Constant.URL.contactDetailURL)/\(contactId).json"
         let body = try? JSONSerialization.data(withJSONObject: parameters, options: [])
     
-        var request = URLRequest.init(url: URL.init(string: contactUrl)!)
+        var request = URLRequest.init(url: URL.init(string: url)!)
         request.httpMethod = HTTPMethod.put.rawValue
+        request.allHTTPHeaderFields = headers
+        request.httpBody = body
+        
+        let task = URLSession.shared.dataTask(with: request) { (result) in
+            switch result {
+            case .success( _, let data):
+                do {
+                    let jsonDecoder = JSONDecoder()
+                    let contactList = try jsonDecoder.decode(Contact.self, from: data)
+                    complition(.success(contactList))
+                }
+                catch {
+                    complition(.failure(error))
+                }
+                break
+            case .failure(let error):
+                complition(.failure(error))
+                break
+            }
+        }
+        task.resume()
+    }
+    
+    class func createContactDetail(parameters:[String: Any] ,complition: @escaping (Result<(Contact), Error>) -> Void) {
+        var headers = [String:String] ()
+        headers["content-type"] = "application/json"
+        
+        let body = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+        
+        var request = URLRequest.init(url: URL.init(string: Constant.URL.contactsURL)!)
+        request.httpMethod = HTTPMethod.post.rawValue
         request.allHTTPHeaderFields = headers
         request.httpBody = body
         

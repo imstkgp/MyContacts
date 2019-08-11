@@ -10,6 +10,8 @@ import Foundation
 
 protocol AddOrEditContactDelegate {
     func updateContactDetails()
+    func contactCreationSuccess(contact:Contact)
+    func contactCreationFailed()
 }
 
 enum ContactInputType:String {
@@ -19,6 +21,7 @@ enum ContactInputType:String {
 class AddOrEditContactVM {
     var delegate: AddOrEditContactDelegate?
     var contactData = [[String: String]]()
+    var contactId: Int?
     var invalidInputs = [String]()
     func setupContactData(_ contact:Contact?) {
         self.contactData.removeAll()
@@ -27,43 +30,70 @@ class AddOrEditContactVM {
         var lname = ""
         var email = ""
         if let contact = contact {
+            self.contactId = contact.id
+            fname = contact.firstName
+            lname = contact.lastName
             if let phoneNumber = contact.phoneNumber {
                 mobile = phoneNumber
             }
             if let emailAddress = contact.email {
                 email = emailAddress
             }
-            fname = contact.firstName
-            lname = contact.lastName
         }
         
         #warning("Move to enum based logic")
         self.contactData.append(["name": "First Name", "key": "first_name", "value": fname, "placeholder": "e.g. Jhon", "type": ContactInputType.firstName.rawValue])
         self.contactData.append(["name": "Last Name", "key": "last_name", "value": lname, "placeholder": "e.g. Mathew", "type": ContactInputType.lastName.rawValue])
         self.contactData.append(["name": "mobile", "key": "phone_number", "value": mobile, "placeholder": "e.g. 9876785645", "type": ContactInputType.mobile.rawValue])
-        self.contactData.append(["name": "email", "key": "favorite", "value": email, "placeholder": "e.g. jhon@gmail.com", "type": ContactInputType.email.rawValue])
+        self.contactData.append(["name": "email", "key": "email", "value": email, "placeholder": "e.g. jhon@gmail.com", "type": ContactInputType.email.rawValue])
         self.delegate?.updateContactDetails()
     }
     
-    func saveContactData() {
-        if (isValidContactDetail()) {
-            var parameters = [String: Any]()
-            for data in self.contactData {
-                if let key = data["key"],
-                    let value = data["value"] {
-                    parameters[key] = value
-                }
+    func saveContactData(withType type:ContactDetailType) {
+        var parameters = [String: Any]()
+        for data in self.contactData {
+            if let key = data["key"],
+                let value = data["value"] {
+                parameters[key] = value
             }
-            APIManager.createContactDetail(contactUrl: url, parameters: parameters, complition: {[weak self] (result) in
+        }
+        type == .add ? createNewContact(withParams: parameters) : updateContact(withParams: parameters)
+    }
+    
+    private func createNewContact(withParams params: [String: Any]) {
+        APIManager.createContactDetail(parameters: params, complition: {[weak self] (result) in
+            guard let strongSelf = self else {
+                return
+            }
+            switch result {
+            case .success(let contact):
+                strongSelf.delegate?.contactCreationSuccess(contact: contact)
+                break
+            case .failure( _):
+                strongSelf.delegate?.contactCreationFailed()
+                break
+            }
+        })
+    }
+    
+    private func updateContact(withParams params: [String: Any]) {
+        if let contactId = self.contactId {
+            APIManager.updateContactDetail(contactId: contactId, parameters: params, complition: {[weak self] (result) in
                 guard let strongSelf = self else {
                     return
                 }
-                strongSelf.parseContactResponse(result)
+                switch result {
+                case .success(let contact):
+                    strongSelf.delegate?.contactCreationSuccess(contact: contact)
+                    break
+                case .failure( _):
+                    strongSelf.delegate?.contactCreationFailed()
+                    break
+                }
             })
         } else {
-            self.delegate?.updateContactDetails()
+            self.delegate?.contactCreationFailed()
         }
-        
     }
     
     func isValidContactDetail() -> Bool {

@@ -22,7 +22,7 @@ final class Validator {
     }
     
     private class func isValidName(_ name: String) -> Bool {
-        let chars = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ ")
+        let chars = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789 ")
         if (name.trimmingCharacters(in: (CharacterSet.whitespacesAndNewlines)) == "") {
             return false
         }

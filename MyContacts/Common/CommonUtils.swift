@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum ContactDetailType {
+    case view, add, edit
+}
+
 final class CommonUtils {
     class func setupTranparentNavigation(forController controller: UIViewController) {
         controller.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)

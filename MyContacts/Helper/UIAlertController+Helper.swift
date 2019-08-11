@@ -9,11 +9,11 @@
 import UIKit
 
 extension UIAlertController {
-    class func alertWithMessage(message:String) -> UIAlertController{
+    class func alertWithMessage(message:String, action:((UIAlertAction?)->Void)?) -> UIAlertController{
         let alert = UIAlertController.init(title: "", message: message, preferredStyle: .alert)
         
         // Replace UIAlertActionStyle.Default by UIAlertActionStyle.default
-        alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
+        alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: action))
         return alert
     }
     

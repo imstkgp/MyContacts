@@ -10,6 +10,7 @@ import UIKit
 
 protocol ContactListDelegate {
     func refreshDetails()
+    func refreshIndexSet(indexSet: IndexSet)
 }
 
 final class ContactListVM {
@@ -17,7 +18,7 @@ final class ContactListVM {
     var contactSectionTitles = [String]()
     var contactList: [Contact]?
     var delegate:ContactListDelegate?
-
+    var activeEditingIndex: IndexPath?
     func fetchContactList() {
         APIManager.getContactList(complition: {[weak self] (result) in
             guard let strongSelf = self else {
@@ -55,15 +56,71 @@ final class ContactListVM {
         contactSectionTitles = [String](contactDictionary.keys)
         contactSectionTitles = contactSectionTitles.sorted(by: <)
         
-        contactDictionary[Constant.otherContactKey] = otherContacts
+        for contactDetail in contactDictionary {
+            contactDictionary[contactDetail.key] = contactDetail.value.sorted(by: <)
+        }
+        contactDictionary[Constant.otherContactKey] = otherContacts.sorted(by: <)
         contactSectionTitles.append(Constant.otherContactKey)
     }
     
-    func openContactDetails(forIndexPath indexPath:IndexPath, fromController controller:UIViewController) {
+    func openContactDetails(forIndexPath indexPath:IndexPath, fromController controller:ContactListVC) {
+        self.activeEditingIndex = indexPath
         let key = self.contactSectionTitles[indexPath.section]
         if let contacts = self.contactDictionary[key] {
             let contactDetailVC = NavigationCoordinator.createContactDetailsController(contacts[indexPath.row])
+            contactDetailVC.delegate = controller
             NavigationCoordinator.push(from: controller, to: contactDetailVC)
+        }
+    }
+    
+    func openAddContact(fromController controller: ContactListVC) {
+        let addContactController = NavigationCoordinator.createEditContactController(nil)
+        addContactController.delegate = controller
+        NavigationCoordinator.present(from: controller, to: addContactController)
+    }
+    
+    func addOrUpdateContactDetail(contact:Contact) {
+        var oldSection:Int? = nil
+        let key = String(contact.firstName.prefix(1).uppercased())
+        if var contactValues = contactDictionary[key] {
+            if let index = contactValues.firstIndex(where: { (existingContact) -> Bool in
+                return existingContact.id == contact.id
+            }) {
+                contactValues[index] = contact
+            } else {
+                if let activeIndex = self.activeEditingIndex {
+                    self.removeCurrentItem(activeIndex);
+                    oldSection = activeIndex.section
+                }
+                contactValues.append(contact)
+            }
+            contactDictionary[key] = contactValues.sorted(by: <)
+        } else {
+            if let activeIndex = self.activeEditingIndex {
+                self.removeCurrentItem(activeIndex);
+                oldSection = activeIndex.section
+            }
+            contactDictionary[key] = [contact]
+        }
+        var updatedIndexs = [Int]()
+        if let newIndex = self.contactSectionTitles.firstIndex(of: key) {
+            updatedIndexs.append(newIndex)
+        }
+        if let oldIndex = oldSection {
+            updatedIndexs.append(oldIndex)
+        }
+        
+        if !updatedIndexs.isEmpty {
+            self.delegate?.refreshIndexSet(indexSet: IndexSet(updatedIndexs))
+        }
+        
+    }
+    
+    func removeCurrentItem(_ activeIndex:IndexPath) {
+        let key = self.contactSectionTitles[activeIndex.section]
+        self.contactDictionary[key]?.remove(at: activeIndex.row)
+        if self.contactDictionary[key]?.isEmpty ?? true {
+            self.contactSectionTitles.remove(at: activeIndex.section)
         }
     }
 }

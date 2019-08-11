@@ -8,10 +8,6 @@
 
 import UIKit
 
-enum ContactDetailType {
-    case view, add, edit
-}
-
 class ContactDetailCell: UITableViewCell {
 
     @IBOutlet weak var typeLabel: UILabel!

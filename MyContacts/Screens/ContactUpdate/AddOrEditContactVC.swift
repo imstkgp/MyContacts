@@ -64,7 +64,9 @@ class AddOrEditContactVC: UIViewController {
     }
     
     var contactDetail:Contact?
+    var delegate: ContactUpdationProtocol?
     var viewModel: AddOrEditContactVM!
+    var type: ContactDetailType = .add
     var activeEditingField:UITextField? {
         didSet {
             self.scrollTableViewToActiveField()
@@ -73,6 +75,9 @@ class AddOrEditContactVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel = AddOrEditContactVM()
+        viewModel.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,8 +92,6 @@ class AddOrEditContactVC: UIViewController {
     }
     
     func setup() {
-        viewModel = AddOrEditContactVM()
-        viewModel.delegate = self
         viewModel.setupContactData(contactDetail)
     }
     
@@ -108,7 +111,12 @@ class AddOrEditContactVC: UIViewController {
     
     @IBAction func doneTapped() {
         self.view.endEditing(true)
-        self.viewModel.saveContactData()
+        if (viewModel.isValidContactDetail()) {
+            CommonUtils.showLoading(forController: self, message: "Saving contact...")
+            self.viewModel.saveContactData(withType: self.type)
+        } else {
+            self.updateContactDetails()
+        }
     }
     
     @IBAction func cancelTapped() {
@@ -181,6 +189,19 @@ extension AddOrEditContactVC: AddOrEditContactDelegate {
     func updateContactDetails() {
         self.userDetailTableView.reloadData()
     }
+    
+    func contactCreationSuccess(contact: Contact) {
+        DispatchQueue.main.async {
+            CommonUtils.hideLoading(forController: self)
+            self.delegate?.onContactUpdatetionSucess(contact: contact)
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    func contactCreationFailed() {
+        CommonUtils.hideLoading(forController: self)
+        self.present(UIAlertController.alertWithMessage(message: Constant.Message.genericErrorMessage, action: nil), animated: true, completion: nil)
+    }
 }
 
 extension AddOrEditContactVC: UITableViewDataSource, UITableViewDelegate {
@@ -246,7 +267,7 @@ extension AddOrEditContactVC: UITextFieldDelegate {
         viewModel.contactData[textField.tag - 1]["value"] = textField.text ?? ""
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField.keyboardType == .numberPad {
+        if textField.keyboardType == .numberPad && !string.isEmpty {
             let maxLength = Constant.mobileNumberLength
             let currentString: NSString = textField.text! as NSString
             let newString: NSString =
