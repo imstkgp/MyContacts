@@ -107,6 +107,8 @@ class AddOrEditContactVC: UIViewController {
     }
     
     @IBAction func doneTapped() {
+        self.view.endEditing(true)
+        self.viewModel.saveContactData()
     }
     
     @IBAction func cancelTapped() {
@@ -175,7 +177,7 @@ extension AddOrEditContactVC: UINavigationControllerDelegate, UIImagePickerContr
     }
 }
 
-extension AddOrEditContactVC: EditContactDelegate {
+extension AddOrEditContactVC: AddOrEditContactDelegate {
     func updateContactDetails() {
         self.userDetailTableView.reloadData()
     }
@@ -195,6 +197,11 @@ extension AddOrEditContactVC: UITableViewDataSource, UITableViewDelegate {
         setKeyboardTypeForTextField(cell.valueField, type: contactData["name"]!)
         cell.valueField.tag = indexPath.row + 1
         cell.valueField.delegate = self
+        if let type = contactData["type"] {
+            cell.invalidInput = viewModel.invalidInputs.contains(type)
+        } else {
+            cell.invalidInput = false
+        }
         cell.type = .edit
         return cell
     }

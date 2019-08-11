@@ -213,27 +213,11 @@
 		A1B3788B22FE0EED00A4A8B9 /* ContactList */ = {
 			isa = PBXGroup;
 			children = (
+				A1B3787522FC90A200A4A8B9 /* ContactListVM.swift */,
+				A1B3786A22FC7CA900A4A8B9 /* ConatctListVC.swift */,
 				A1B3788E22FE0F2900A4A8B9 /* View */,
-				A1B3788D22FE0F2000A4A8B9 /* ViewModel */,
-				A1B3788C22FE0F1800A4A8B9 /* Controller */,
 			);
 			path = ContactList;
-			sourceTree = "<group>";
-		};
-		A1B3788C22FE0F1800A4A8B9 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				A1B3786A22FC7CA900A4A8B9 /* ConatctListVC.swift */,
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		A1B3788D22FE0F2000A4A8B9 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				A1B3787522FC90A200A4A8B9 /* ContactListVM.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		A1B3788E22FE0F2900A4A8B9 /* View */ = {
@@ -247,27 +231,11 @@
 		A1B3788F22FE0F4F00A4A8B9 /* ContactDetails */ = {
 			isa = PBXGroup;
 			children = (
+				A1B3789E22FE2DC100A4A8B9 /* ContactDetailVM.swift */,
+				A1B3787E22FDE81C00A4A8B9 /* ContactDetailVC.swift */,
 				A1B3789222FE0F7200A4A8B9 /* View */,
-				A1B3789122FE0F6A00A4A8B9 /* ViewModel */,
-				A1B3789022FE0F6200A4A8B9 /* Controller */,
 			);
 			path = ContactDetails;
-			sourceTree = "<group>";
-		};
-		A1B3789022FE0F6200A4A8B9 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				A1B3787E22FDE81C00A4A8B9 /* ContactDetailVC.swift */,
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		A1B3789122FE0F6A00A4A8B9 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				A1B3789E22FE2DC100A4A8B9 /* ContactDetailVM.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		A1B3789222FE0F7200A4A8B9 /* View */ = {
@@ -281,19 +249,11 @@
 		A1B3789322FE0F9100A4A8B9 /* ContactUpdate */ = {
 			isa = PBXGroup;
 			children = (
-				A1B3789622FE0FAB00A4A8B9 /* ViewModel */,
+				A1B378AD22FF49C400A4A8B9 /* AddOrEditContactVM.swift */,
+				A1B3788022FDE82C00A4A8B9 /* AddOrEditContactVC.swift */,
 				A1B3789522FE0FA500A4A8B9 /* View */,
-				A1B3789422FE0F9F00A4A8B9 /* Controller */,
 			);
 			path = ContactUpdate;
-			sourceTree = "<group>";
-		};
-		A1B3789422FE0F9F00A4A8B9 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				A1B3788022FDE82C00A4A8B9 /* AddOrEditContactVC.swift */,
-			);
-			name = Controller;
 			sourceTree = "<group>";
 		};
 		A1B3789522FE0FA500A4A8B9 /* View */ = {
@@ -301,14 +261,6 @@
 			children = (
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		A1B3789622FE0FAB00A4A8B9 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				A1B378AD22FF49C400A4A8B9 /* AddOrEditContactVM.swift */,
-			);
-			name = ViewModel;
 			sourceTree = "<group>";
 		};
 		A1B3789722FE101B00A4A8B9 /* Common */ = {

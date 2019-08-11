@@ -12,13 +12,13 @@ final class Validator {
     private class func isValidEmail(_ email:String) -> Bool {
         let regex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailTestPredicate = NSPredicate(format: "SELF MATCHES %@", regex)
-        return emailTestPredicate.evaluate(with: self)
+        return emailTestPredicate.evaluate(with: email)
     }
     
     private class func isValidPhoneNumber(_ number: String) -> Bool {
         let regex: String = "[2356789][0-9]{6}([0-9]{3})?"
         let test = NSPredicate(format: "SELF MATCHES %@", regex)
-        return test.evaluate(with: self)
+        return test.evaluate(with: number)
     }
     
     private class func isValidName(_ name: String) -> Bool {
