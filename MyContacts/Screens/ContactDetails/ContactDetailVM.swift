@@ -22,10 +22,15 @@ class ContactDetailVM {
     var contactDetail: Contact?
     
     var delegate: ContactDetailDelegate?
-
+    var apiHelper: APIManager
+    
+    init(apiHelper: APIManager = .shared) {
+        self.apiHelper = apiHelper
+    }
+    
     func fetchContactDetails(forId contactId:Int?) {
         if let contactId = contactId {
-            APIManager.getContactDetail(forId: contactId, complition: {[weak self] (result) in
+            apiHelper.getContactDetail(forId: contactId, complition: {[weak self] (result) in
                 guard let strongSelf = self else {
                     return
                 }
@@ -38,7 +43,7 @@ class ContactDetailVM {
         if let contactDetail = contactDetail {
             var parameters = [String: Any]()
             parameters["favorite"] = isFavourite
-            APIManager.updateContactDetail(contactId: contactDetail.id, parameters: parameters, complition: {[weak self] (result) in
+            apiHelper.updateContactDetail(contactId: contactDetail.id, parameters: parameters, complition: {[weak self] (result) in
                 guard let strongSelf = self else {
                     return
                 }

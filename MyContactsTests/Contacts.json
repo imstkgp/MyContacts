@@ -1,0 +1,18 @@
+[
+    {
+        "id": 9164,
+        "first_name": "asdsad ",
+        "last_name": "asdsad 123",
+        "profile_pic": "/images/missing.png",
+        "favorite": true,
+        "url": "https://gojek-contacts-app.herokuapp.com/contacts/9164.json"
+    },
+    {
+        "id": 9168,
+        "first_name": "August",
+        "last_name": "2019",
+        "profile_pic": "/images/missing.png",
+        "favorite": true,
+        "url": "https://gojek-contacts-app.herokuapp.com/contacts/9168.json"
+    }
+]

@@ -19,8 +19,14 @@ final class ContactListVM {
     var contactList: [Contact]?
     var delegate:ContactListDelegate?
     var activeEditingIndex: IndexPath?
+    var apiHelper: APIManager
+    
+    init(apiHelper: APIManager = .shared) {
+        self.apiHelper = apiHelper
+    }
+    
     func fetchContactList() {
-        APIManager.getContactList(complition: {[weak self] (result) in
+        apiHelper.getContactList(complition: {[weak self] (result) in
             guard let strongSelf = self else {
                 return
             }

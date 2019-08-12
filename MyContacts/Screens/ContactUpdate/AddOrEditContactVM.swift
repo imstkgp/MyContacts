@@ -23,6 +23,12 @@ class AddOrEditContactVM {
     var contactData = [[String: String]]()
     var contactId: Int?
     var invalidInputs = [String]()
+    var apiHelper: APIManager
+    
+    init(apiHelper: APIManager = .shared) {
+        self.apiHelper = apiHelper
+    }
+    
     func setupContactData(_ contact:Contact?) {
         self.contactData.removeAll()
         var mobile = ""
@@ -61,7 +67,7 @@ class AddOrEditContactVM {
     }
     
     private func createNewContact(withParams params: [String: Any]) {
-        APIManager.createContactDetail(parameters: params, complition: {[weak self] (result) in
+        apiHelper.createContactDetail(parameters: params, complition: {[weak self] (result) in
             guard let strongSelf = self else {
                 return
             }
@@ -78,7 +84,7 @@ class AddOrEditContactVM {
     
     private func updateContact(withParams params: [String: Any]) {
         if let contactId = self.contactId {
-            APIManager.updateContactDetail(contactId: contactId, parameters: params, complition: {[weak self] (result) in
+            apiHelper.updateContactDetail(contactId: contactId, parameters: params, complition: {[weak self] (result) in
                 guard let strongSelf = self else {
                     return
                 }

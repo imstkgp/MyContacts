@@ -15,7 +15,14 @@ public enum HTTPMethod: String {
 }
 
 final class APIManager {
-    class func getContactList(complition: @escaping (Result<([Contact]), Error>) -> Void) {
+    private let session: URLSession
+    static let shared = APIManager()
+    
+    init(session: URLSession = .shared) {
+        self.session = session
+    }
+    
+    func getContactList(complition: @escaping (Result<([Contact]), Error>) -> Void) {
         var request = URLRequest.init(url: URL.init(string: Constant.URL.contactsURL)!)
         request.httpMethod = HTTPMethod.get.rawValue
         
@@ -39,7 +46,7 @@ final class APIManager {
         task.resume()
     }
     
-    class func getContactDetail(forId contactId:Int, complition: @escaping (Result<(Contact), Error>) -> Void) {
+    func getContactDetail(forId contactId:Int, complition: @escaping (Result<(Contact), Error>) -> Void) {
         let url = "\(Constant.URL.contactDetailURL)/\(contactId).json"
         var request = URLRequest.init(url: URL.init(string: url)!)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -64,7 +71,7 @@ final class APIManager {
         task.resume()
     }
     
-    class func updateContactDetail(contactId:Int, parameters:[String: Any] ,complition: @escaping (Result<(Contact), Error>) -> Void) {
+    func updateContactDetail(contactId:Int, parameters:[String: Any] ,complition: @escaping (Result<(Contact), Error>) -> Void) {
         var headers = [String:String] ()
         headers["content-type"] = "application/json"
     
@@ -96,7 +103,7 @@ final class APIManager {
         task.resume()
     }
     
-    class func createContactDetail(parameters:[String: Any] ,complition: @escaping (Result<(Contact), Error>) -> Void) {
+    func createContactDetail(parameters:[String: Any] ,complition: @escaping (Result<(Contact), Error>) -> Void) {
         var headers = [String:String] ()
         headers["content-type"] = "application/json"
         
