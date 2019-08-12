@@ -35,6 +35,11 @@ class ContactListVC: UITableViewController {
         fetchContacts()
     }
     
+    @IBAction func groupButtonTapped(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController.alertWithMessage(message: "This feature is getting ready. Will be released soon.", action: nil)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func addNewContact(_ sender: UIBarButtonItem) {
         self.viewModel.openAddContact(fromController: self)
     }
