@@ -65,7 +65,7 @@ class ContactDetailVC: UIViewController {
             return
         }
         userNameLabel.text = contactDetail.fullName
-        if let url = URL.init(string: contactDetail.profileURL) {
+        if let profileURL = contactDetail.profileURL, let url = URL.init(string: profileURL) {
             userImageView.load(url: url, defaultImage: #imageLiteral(resourceName: "placeholder_photo"))
         }
         self.favButton.isSelected = contactDetail.favorite

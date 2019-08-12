@@ -59,8 +59,11 @@ final class ContactListVM {
         for contactDetail in contactDictionary {
             contactDictionary[contactDetail.key] = contactDetail.value.sorted(by: <)
         }
-        contactDictionary[Constant.otherContactKey] = otherContacts.sorted(by: <)
-        contactSectionTitles.append(Constant.otherContactKey)
+        
+        if !otherContacts.isEmpty {
+            contactDictionary[Constant.otherContactKey] = otherContacts.sorted(by: <)
+            contactSectionTitles.append(Constant.otherContactKey)
+        }
     }
     
     func openContactDetails(forIndexPath indexPath:IndexPath, fromController controller:ContactListVC) {

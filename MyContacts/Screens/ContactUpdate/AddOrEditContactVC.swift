@@ -194,7 +194,9 @@ extension AddOrEditContactVC: AddOrEditContactDelegate {
         DispatchQueue.main.async {
             CommonUtils.hideLoading(forController: self)
             self.delegate?.onContactUpdatetionSucess(contact: contact)
-            self.dismiss(animated: true, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3, execute: {
+                self.dismiss(animated: true, completion: nil)
+            })
         }
     }
     

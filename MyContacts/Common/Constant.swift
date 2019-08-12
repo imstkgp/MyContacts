@@ -14,9 +14,9 @@ struct Constant {
     static let mobileNumberLength = 12
     static let appGreenColor = UIColor.init(red: 80.0/255.0, green: 227.0/255.0, blue: 194.0/255.0, alpha: 1.0)
     struct URL {
-        static let baseURL = "http://gojek-contacts-app.herokuapp.com/"
-        static let contactDetailURL = "http://gojek-contacts-app.herokuapp.com/contacts/"
-        static let contactsURL = "http://gojek-contacts-app.herokuapp.com/contacts.json"
+        static let baseURL = "https://gojek-contacts-app.herokuapp.com/"
+        static let contactDetailURL = "\(baseURL)contacts/"
+        static let contactsURL = "\(baseURL)contacts.json"
     }
     
     struct Controller {

@@ -22,8 +22,8 @@ struct Contact: Codable, Comparable {
         }
     }
     
-    var profileURL: String {
-        return Constant.URL.baseURL + self.profilePic
+    var profileURL: String? {
+        return self.profilePic.contains("missing.png") ? nil : self.profilePic
     }
     
     enum CodingKeys: String, CodingKey {

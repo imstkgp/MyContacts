@@ -30,7 +30,7 @@ class HomeContactCell: UITableViewCell {
             }
             userNameLabel.text = model.fullName
             favImageView.isHidden = !model.favorite
-            if let url = URL.init(string: model.profileURL) {
+            if let profileURL = model.profileURL, let url = URL.init(string: profileURL) {
                 userImageView.load(url: url, defaultImage: #imageLiteral(resourceName: "placeholder_photo"))
             }
         }

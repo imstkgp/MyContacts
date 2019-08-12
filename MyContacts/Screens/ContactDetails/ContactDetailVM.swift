@@ -63,12 +63,12 @@ class ContactDetailVM {
         
         self.contactType.removeAll()
         self.contactData.removeAll()
-        if let mobile = contact.phoneNumber {
+        if let mobile = contact.phoneNumber, !mobile.isEmpty {
             self.mobile = mobile
             self.contactType.append("mobile")
             self.contactData.append(mobile)
         }
-        if let email = contact.email {
+        if let email = contact.email, !email.isEmpty {
             self.email = email
             self.contactType.append("email")
             self.contactData.append(email)
